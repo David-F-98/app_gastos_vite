@@ -10,7 +10,7 @@ import GastosPorCategoria from './components/GastosPorCategoria.jsx';
 import InicioDeSesion from './components/InicioDeSesion.jsx';
 import ListaDeGastos from './components/ListaDeGastos.jsx';
 import RegistroUsuarios from './components/RegistroUsuarios.jsx';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import favicon from './images/logo.png';
 import Fondo from './elements/Fondo.jsx';
 
@@ -23,7 +23,7 @@ WebFont.load({
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <>
+  <HelmetProvider>
     <Helmet>
       <link rel='shortcut icon' href={favicon} type='image/x-icon' />
     </Helmet>
@@ -38,11 +38,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path='/editar/:id' element={<EditarGasto/>}></Route>
             <Route path='/' element={<App/>}></Route>
           </Routes>
-          <App />
+          {/* <App /> */}
         </Contenedor>
       </BrowserRouter>
 
       <Fondo/>
     </React.StrictMode>,
-  </>
+  </HelmetProvider>
 )
