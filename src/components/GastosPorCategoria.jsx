@@ -1,5 +1,5 @@
 import React from 'react';
-import {Header,Titulo,ContenedorHeader} from '../elements/Header';
+import {Header,Titulo,} from '../elements/Header';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import BtnRegresar from '../elements/BtnRegresar';
 const GastosPorCategoria = () => {
