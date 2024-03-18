@@ -1,8 +1,7 @@
 import React from 'react';
 import {Header,Titulo,ContenedorHeader} from '../elements/Header';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
-
-
+import BtnRegresar from '../elements/BtnRegresar';
 const GastosPorCategoria = () => {
     return ( 
     <HelmetProvider>
@@ -11,9 +10,8 @@ const GastosPorCategoria = () => {
       </Helmet>
 
       <Header>
-        <ContenedorHeader>
+          <BtnRegresar/>
           <Titulo>Gastos por categoría</Titulo>
-        </ContenedorHeader>
       </Header>
     </HelmetProvider>
      );
