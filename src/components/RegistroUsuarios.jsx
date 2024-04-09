@@ -7,6 +7,8 @@ import SvgLogin from '../images/registro.svg?react'; // Forma de importar archiv
 import {Formulario,Input,ContenedorBoton} from '../elements/ElementosDeFormulario';
 import styled from 'styled-components';
 import { auth } from '../firebase/firebaseConfig';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const Svg =  styled(SvgLogin)`
     width: 100%;
@@ -16,6 +18,7 @@ const Svg =  styled(SvgLogin)`
 `;
 
 const RegistroUsuarios = () => {
+    const navigate = useNavigate();
     const [correo, establecerCorreo] = useState('');
     const [password, establecerPassord] = useState('');
     const [password2, establecerPassord2] = useState('');
@@ -36,7 +39,7 @@ const RegistroUsuarios = () => {
         }
     }
 
-    const handleSubmit = (e) =>{
+    const handleSubmit = async(e) =>{
         e.preventDefault();
 
         //Comprobamos del lado del cliente que el correo sea valido
@@ -58,10 +61,28 @@ const RegistroUsuarios = () => {
         }
 
         try {
-            createUserWithEmailAndPassword(auth,correo,password);
+            await createUserWithEmailAndPassword(auth,correo,password);
+            console.log('El usuario se creo con exito')
+            navigate('/');
         } catch (error) {
-            
+            let mensaje;
+            switch (error.code){
+                case 'auth/invalid-password':
+                    mensaje = 'La contraseña tiene que ser de al menos 6 caracteres.'
+                    break;
+                case 'auth/email-already-in-use':
+                    mensaje = 'Ya existe una cuenta con el correo electrónico proporcionado.'
+                break;
+                case 'auth/invalid-email':
+                    mensaje = 'El correo electrónico no es válido.'
+                break;
+                default:
+                    mensaje = 'Hubo un error al intentar crear la cuenta.'
+                break;
+            }
+            console.log(mensaje);
         }
+
     }
 
     return ( 
