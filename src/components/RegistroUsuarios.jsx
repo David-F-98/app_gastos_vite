@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import {Header,Titulo,ContenedorHeader} from '../elements/Header';
 import Boton from '../elements/Boton';
@@ -14,6 +15,50 @@ const Svg =  styled(SvgLogin)`
 `;
 
 const RegistroUsuarios = () => {
+    const [correo, establecerCorreo] = useState('');
+    const [password, establecerPassord] = useState('');
+    const [password2, establecerPassord2] = useState('');
+
+    const handleChange = (e) =>{
+        switch(e.target.name){
+            case 'email':
+                establecerCorreo(e.target.value);
+             break;
+            case 'password':
+                establecerPassord(e.target.value);
+                break;
+            case 'password2':
+                establecerPassord2(e.target.value);
+                break;
+            default:
+                break;
+        }
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+
+        //Comprobamos del lado del cliente que el correo sea valido
+        const expresionRegular = /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/;
+        if(correo === '' || password === '' || password2 === ''){
+            console.log('Llene todos los datos');
+            return;
+        }
+
+        if(!expresionRegular.test(correo)){
+            console.log('por favor ingresa un correo electronico valido');
+            return;
+        }
+
+
+        if(password !== password2){
+            console.log('Las contraseñas no son iguales');
+            return;
+        }
+
+        console.log('Registramos Usuario');
+    }
+
     return ( 
         <>
             <HelmetProvider>
@@ -30,25 +75,28 @@ const RegistroUsuarios = () => {
                     </ContenedorHeader>
                 </Header>
             </HelmetProvider>
-            <Formulario>
+            <Formulario onSubmit={handleSubmit}>
                 <Svg/>
                 <Input 
                     type='email'
                     name='email'
                     placeholder='Correo Electrónico'
-
+                    value={correo}
+                    onChange={handleChange}
                 />
                 <Input 
                     type='password'
                     name='password'
                     placeholder='Contraseña'
-
+                    value={password}
+                    onChange={handleChange}
                 /> 
                 <Input 
                     type='password'
                     name='password2'
                     placeholder='Confirma Contraseña'
-
+                    value={password2}
+                    onChange={handleChange}
                 /> 
                 <ContenedorBoton>
                     <Boton as='button' type='submit' $primario>Crear Cuenta</Boton>
