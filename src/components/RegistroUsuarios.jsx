@@ -6,6 +6,7 @@ import Boton from '../elements/Boton';
 import SvgLogin from '../images/registro.svg?react'; // Forma de importar archivos SVG como componentes en React Vite
 import {Formulario,Input,ContenedorBoton} from '../elements/ElementosDeFormulario';
 import styled from 'styled-components';
+import { auth } from '../firebase/firebaseConfig';
 
 const Svg =  styled(SvgLogin)`
     width: 100%;
@@ -56,7 +57,11 @@ const RegistroUsuarios = () => {
             return;
         }
 
-        console.log('Registramos Usuario');
+        try {
+            createUserWithEmailAndPassword(auth,correo,password);
+        } catch (error) {
+            
+        }
     }
 
     return ( 
